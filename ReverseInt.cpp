@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 #include <limits.h>
+#include <vector>
 using namespace std;
 
 
@@ -109,6 +110,58 @@ bool isMatch(const char *s, const char *p) {
 	}
 
 	return isMatch(s,p);
+}
+
+int maxArea(vector<int> &height) {
+	if(height.size()<2){
+		return 0;
+	}
+	int area=0;
+	int i=0,j=height.size()-1;
+	while(i<j){
+		int tempArea=min(height[i],height[j])*(j-i);
+		area=max(area,tempArea);
+		if(height[i]<height[j]){
+			int tHeight=height[i];
+			while(i<j&&height[i]<=tHeight){
+				i++;
+			}
+		}else{
+			int tHeight=height[j];
+			while(i<j&&height[j]<=tHeight){
+				j--;
+			}
+		}
+
+	}
+
+
+	return area;
+}
+
+
+
+string longestCommonPrefix(vector<string> &strs) {
+	if(strs.size()==0){
+		return "";
+	}
+	string prefix=strs[0];
+	for(int i=1;i<strs.size();i++){
+		if(strs[i].length()<prefix.length()){
+			prefix=strs[i];
+		}
+	}
+
+	for(int i=0;i<strs.size();i++){
+		for(int j=0;j<prefix.length();j++){
+			if(prefix[j]!=strs[i][j]){
+				prefix=prefix.substr(0,j);
+				break;
+			}
+		}
+	}
+
+	return prefix;
 }
 
 int main(){
