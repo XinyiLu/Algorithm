@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <iostream>
 #include <string>
+#include <vector>
+#include <map>
 
 using namespace std;
 
@@ -46,4 +48,55 @@ public:
 		}
 		return *needle==NULL;
 	}
+
+	vector<int> findSubstring(string S, vector<string> &L) {
+		vector<int> result;
+		if(L.size()==0||S.length()<L.size()*L[0].length()){
+			return result;
+		}
+		
+		map<string,int> lmap;
+		for(int i=0;i<L.size();i++){
+			map<string,int>::iterator iter=lmap.find(L[i]);
+			if(iter==lmap.end()){
+				lmap.insert(std::pair<string,int>(L[i],1));
+			}else{
+				(iter->second)++;
+			}
+		}
+
+		int unitLen=L[0].length();
+		for(int i=0;i<=S.length()-L.size()*unitLen;i++){
+			map<string,int> newMap(lmap);
+			int j=0;
+			for(;j<L.size();j++){
+				string str=S.substr(j*unitLen+i,unitLen);
+				map<string,int>::iterator iter=newMap.find(str);
+				if(iter==newMap.end()||iter->second==0){
+					break;
+				}else{
+					(iter->second)--;
+				}
+			}
+
+			if(j==L.size()){
+				result.push_back(i);
+			}
+		}
+		return result;
+
+    }
+
+	
+
 };
+
+int main(){
+
+	Solution sol;
+	vector<string> vec;
+	vec.push_back("is");
+	sol.findSubstring("mississippi",vec);
+	int value;
+	cin>>value;
+}
