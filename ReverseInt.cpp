@@ -285,8 +285,56 @@ int threeSumClosest(vector<int> &num, int target) {
 		threeSumClosestHelper(num,target,0,0,3,pointer);
 		return *pointer;
 }
-    
+vector<string> letterCombinationsHelper(string digits,int index);
+vector<char> getLetters(int digit);
 
+vector<string> letterCombinations(string digits) {
+	 return letterCombinationsHelper(digits,0);
+}
+
+vector<string> letterCombinationsHelper(string digits,int index){
+	vector<string> result;
+	if(index==digits.size()){
+		result.push_back("");
+		return result;
+	}
+		
+	vector<string> subset=letterCombinationsHelper(digits,index+1);
+	vector<char> letters=getLetters(digits[index]-'0');
+	for(char c:letters){
+		for(string str:subset){
+			stringstream ss;
+            string s;
+            ss << c;
+            ss >> s;
+			result.push_back(s+str);
+		}
+	}
+	return result;
+}
+
+
+vector<char> getLetters(int digit){
+	vector<char> letters;
+	if(digit<=7){
+		char startChar='a'+3*(digit-2);
+		for(int i=0;i<3;i++){
+			letters.push_back(startChar+i);
+		}
+	}else{
+		char startChar='t'+3*(digit-8);
+		for(int i=0;i<3;i++){
+			letters.push_back(startChar+i);
+		}
+	}
+
+	if(digit==7){
+		letters.push_back('s');
+	}else if(digit==9){
+		letters.push_back('z');
+	}
+	return letters;
+}
 
 int main(){
 	int value;
