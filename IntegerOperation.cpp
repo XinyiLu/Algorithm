@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
-
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -31,4 +32,35 @@ public:
 
 		return negative?-result:result;
     }
+	
+	void nextPermutation(vector<int> &num) {
+			if(num.size()<2){
+			return;
+		}
+
+		int start=num.size()-2,highest=num[num.size()-1];
+		int hindex=num.size()-1;
+		while(start>=0&&num[start]>=highest){
+			highest=num[start];
+			hindex=start;
+			start--;
+		}
+		if(start<0){
+			sort(num.begin(),num.end());
+		}else{
+			int minNum=num[start];
+			for(int j=start+1;j<num.size();j++){
+				if(num[j]>minNum&&num[j]<highest){
+					highest=num[j];
+					hindex=j;
+				}
+			}
+
+			num[start]=highest;
+			num[hindex]=minNum;
+			sort(num.begin()+(start+1),num.end());
+		}
+    }
+
+
 };
