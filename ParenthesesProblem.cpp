@@ -52,4 +52,35 @@ public:
 		return result;
 	}
 
+	int longestValidParentheses(string s) {
+		if(s.length()<2)
+			return 0;
+        stack<int> st;
+		int maxNum=0;
+		for(int i=0;i<s.length();i++){
+			if(s[i]=='('){
+				st.push(-1);
+			}else{
+				int count=0;
+				while(!st.empty()&&st.top()!=-1){
+					count+=st.top();
+					st.pop();
+				}
+				if(st.empty()){
+					maxNum=max(maxNum,count);
+				}else{
+					st.pop();
+					count+=2;
+					while(!st.empty()&&st.top()!=-1){
+						count+=st.top();
+						st.pop();
+					}
+					maxNum=max(maxNum,count);
+					st.push(count);
+				}
+			}
+		}
+		return maxNum;
+    }
+
 };
