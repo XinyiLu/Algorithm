@@ -109,13 +109,34 @@ public:
 			searchRangeHelper(indices,A,start,mid-1,target);
 		}
 	}
+
+
+	int searchInsert(int A[], int n, int target) {
+		  return searchInsertHelper(A,0,n-1,target); 
+    }
+
+	int searchInsertHelper(int A[],int start,int end,int target){
+		if(start>end){
+			return start;
+		}else if(start==end){
+			if(A[start]==target){
+				return start;
+			}else if(A[start]<target){
+				return start+1;
+			}else{
+				return start;
+			}
+		}
+
+		int mid=start+(end-start)/2;
+		if(A[mid]==target){
+			return mid;
+		}else if(A[mid]>target){
+			return searchInsertHelper(A,start,mid-1,target);
+		}else{
+			return searchInsertHelper(A,mid+1,end,target);
+		}
+		
+	}
 };
 
-
-int main(){
-	Solution sol;
-	int range[]={2,2};
-	sol.searchRange(range,2,2);
-
-	return 1;
-}
