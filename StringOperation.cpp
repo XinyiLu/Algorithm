@@ -90,13 +90,3 @@ public:
 	
 
 };
-
-int main(){
-
-	Solution sol;
-	vector<string> vec;
-	vec.push_back("is");
-	sol.findSubstring("mississippi",vec);
-	int value;
-	cin>>value;
-}
