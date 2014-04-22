@@ -97,10 +97,3 @@ public:
 
 };
 
-
-int main(){
-	Solution sol;
-	sol.countAndSay(4);
-	return 1;
-
-}

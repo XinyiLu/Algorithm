@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <sstream>
 
 using namespace std;
 
@@ -155,4 +156,90 @@ public:
 
 		return str;
 	}
+
+
+ bool isMatch(const char *s, const char *p) {
+		if(*p==NULL){
+			return *s==NULL;
+		}else if(*s==NULL){
+			return isPNull(p);
+		}
+
+		//first the index of the first *
+		while(*s!=NULL&&*p!=NULL&&*p!='*'){
+			if(*s==*p||*p=='?'){
+				s++;
+				p++;
+			}else{
+				return false;
+			}
+		}
+
+		if(*s==NULL){
+			return isPNull(p);
+		}else if(*p==NULL){
+			return *s==NULL;
+		}
+		const char *sbegin=s,*pbegin=p;
+
+		//the index of the last *
+		s+=strlen(s)-1;
+		p+=strlen(p)-1;
+		while(s>=sbegin&&p>pbegin&&*p!='*'){
+			if(*s==*p||*p=='?'){
+				s--;
+				p--;
+			}else{
+				return false;
+			}
+		}
+		if(p==pbegin){
+			return true;
+		}else if(s<sbegin){
+			while(p>pbegin&&*p=='*'){
+				p--;
+			}
+			return p==pbegin;
+		}
+
+		const char *send=s+1,*pend=p;
+		//split p from pbegin to pend by *
+		const char *pch=pbegin;
+		while(pch<pend){
+			pbegin=pch+1;
+			pch=strchr(pbegin,'*');
+			const char *sindex=matchSegment(sbegin,send,pbegin,pch);
+			if(sindex==send+1){
+				return false;
+			}
+			sbegin=sindex+(pch-pbegin);
+		}
+
+		return true;
+    }
+
+	const char* matchSegment(const char *sbegin,const char *send,const char *pbegin,const char *pend){
+		while((send-sbegin)>=(pend-pbegin)){
+			int i=0;
+			for(;i<pend-pbegin;i++){
+				if(*(sbegin+i)!=*(pbegin+i)&&*(pbegin+i)!='?'){
+					break;
+				}
+			}
+			if(i==pend-pbegin)
+				return sbegin;
+			sbegin++;
+		}
+		return send+1;
+	}
+
+
+
+	bool isPNull(const char* p){
+		while(*p!=NULL&&*p=='*'){
+				p++;
+			}
+		return *p==NULL;
+	}
 };
+
