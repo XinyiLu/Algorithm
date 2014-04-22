@@ -5,6 +5,7 @@
 #include <vector>
 #include <map>
 #include <sstream>
+#include <algorithm>
 
 using namespace std;
 
@@ -241,5 +242,34 @@ public:
 			}
 		return *p==NULL;
 	}
+
+
+	vector<string> anagrams(vector<string> &strs) {
+		vector<string> result;
+		map<string,vector<int>> hashmap;
+		for(int i=0;i<strs.size();i++){
+			string str(strs[i]);
+			sort(str.begin(),str.end());
+			map<string,vector<int>>::iterator iter=hashmap.find(str);
+			if(hashmap.find(str)==hashmap.end()){
+				vector<int> unit;
+				unit.push_back(i);
+				hashmap.insert(std::pair<string,vector<int>>(str,unit));
+			}else{
+				iter->second.push_back(i);
+			}
+		}   
+
+		for(map<string,vector<int>>::iterator iter=hashmap.begin();iter!=hashmap.end();iter++){
+			vector<int> indices=iter->second;
+			if(indices.size()>1){
+				for(int i=0;i<indices.size();i++){
+					result.push_back(strs[indices[i]]);
+				}
+			}
+		}
+
+		return result;
+    }
 };
 

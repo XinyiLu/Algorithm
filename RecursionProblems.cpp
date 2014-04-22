@@ -151,23 +151,17 @@ public:
 		return result;
 	}
 
+
+	double pow(double x, int n) {
+		  bool negative=n<0?true:false;
+		  n=abs(n);
+		  double number=(n%2==1)?x:1;
+		  if(n/2>0){
+			number*=pow(x*x,n/2);
+		  }
+		  return negative?(1.0/number):number;
+    }
+
 };
 
-int main(){
-	
-	Solution sol;
-	int a[]={3,3,1,2,3,2,3,1};
-	vector<int> num(a,a+sizeof(a)/sizeof(int));
-	vector<vector<int>> result=sol.permuteUnique(num);
-	for(int i=0;i<result.size();i++){
-		vector<int> unit=result[i];
-		for(int j=0;j<unit.size();j++){
-			cout<<unit[j]<<"\t";
-		}
-		cout<<endl;
-	}
-	cout<<"finished"<<endl;
-	int value;
-	cin>>value;
-}
 
