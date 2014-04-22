@@ -6,6 +6,7 @@
 #include <limits.h>
 #include <vector>
 #include <algorithm>
+#include <set>
 using namespace std;
 
 
@@ -171,5 +172,52 @@ public:
 		}
 		return m;
     }
+
+
+	bool canJump(int A[], int n) {
+		if(n<=1)
+			return true;
+
+		int index=n-1;
+		while(index>=0){
+			int minIndex=index;
+			for(int i=index-1;i>=0;i--){
+				if((index-i)<=A[i]){
+					minIndex=i;
+				}
+			}
+			if(minIndex==index){
+				break;
+			}
+			index=minIndex;
+		}
+		return index<=0;
+    }
+
+	int jump(int A[], int n) {
+        if(n<=1)
+			return 0;
+		set<int> list;
+		list.insert(n-1);
+		return jumpHelper(A,list,n-1,0);
+    }
+
+	int jumpHelper(int A[],set<int> list,int index,int level){
+		if(index==0){
+			return level; 
+		}
+		set<int> result;
+		int smallest=index-1;
+		for(set<int>::iterator iter=list.begin();iter!=list.end();iter++){
+			for(int j=0;j<index;j++){
+				if(((*iter-j)<=A[j])){
+					result.insert(j);
+					smallest=min(smallest,j);
+				}
+			}
+		}
+
+		return jumpHelper(A,result,smallest,level+1);
+	}
 };
 

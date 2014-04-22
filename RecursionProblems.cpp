@@ -95,5 +95,79 @@ public:
 		return result;
 	}
 
+
+	vector<vector<int> > permute(vector<int> &num) {
+		sort(num.begin(),num.end());
+		return permuteHelper(num,0);
+    }
+
+	vector<vector<int>> permuteHelper(vector<int> &num,int start){
+		vector<vector<int>> result;
+		if(start==num.size()){
+			vector<int> unit;
+			result.push_back(unit);
+			return result;
+		}
+
+		for(int i=start;i<num.size();i++){
+			vector<int> newNum(num);
+			int temp=newNum[i];
+			newNum[i]=newNum[start];
+			vector<vector<int>> subset=permuteHelper(newNum,start+1);
+			for(int j=0;j<subset.size();j++){
+				subset[j].insert(subset[j].begin(),temp);
+			}
+			result.insert(result.end(),subset.begin(),subset.end());
+		}
+		return result;
+	}
+
+	vector<vector<int> > permuteUnique(vector<int> &num) {
+		sort(num.begin(),num.end()); 
+		return permuteUniqueHelper(num,0);
+    }
+
+	vector<vector<int>> permuteUniqueHelper(vector<int> &num,int start){
+		vector<vector<int>> result;
+		if(start==num.size()){
+			vector<int> unit;
+			result.push_back(unit);
+			return result;
+		}
+
+		for(int i=start;i<num.size();i++){
+			if(i>start&&num[i]==num[i-1])
+				continue;
+			vector<int> newNum(num);
+			int temp=newNum[i];
+			newNum[i]=newNum[start];
+			sort(newNum.begin()+start+1,newNum.end());
+			vector<vector<int>> subset=permuteUniqueHelper(newNum,start+1);
+			for(int j=0;j<subset.size();j++){
+				subset[j].insert(subset[j].begin(),temp);
+			}
+			result.insert(result.end(),subset.begin(),subset.end());
+		}
+		return result;
+	}
+
 };
+
+int main(){
+	
+	Solution sol;
+	int a[]={3,3,1,2,3,2,3,1};
+	vector<int> num(a,a+sizeof(a)/sizeof(int));
+	vector<vector<int>> result=sol.permuteUnique(num);
+	for(int i=0;i<result.size();i++){
+		vector<int> unit=result[i];
+		for(int j=0;j<unit.size();j++){
+			cout<<unit[j]<<"\t";
+		}
+		cout<<endl;
+	}
+	cout<<"finished"<<endl;
+	int value;
+	cin>>value;
+}
 
