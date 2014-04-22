@@ -119,18 +119,18 @@ public:
 };
 
 
-int main(){
-
-	Solution sol;
-	string str[]={".87654321","2........","3........","4........","5........","6........","7........","8........","9........"};
-	vector<vector<char>> board;
-	for(int i=0;i<9;i++){
-		vector<char> row(str[i].begin(),str[i].end());
-		board.push_back(row);
-	}
-	bool result=sol.isValidSudoku(board);
-	cout<<result;
-	cin>>result;
-	return 1;
-
-}
+//int main(){
+//
+//	Solution sol;
+//	string str[]={".87654321","2........","3........","4........","5........","6........","7........","8........","9........"};
+//	vector<vector<char>> board;
+//	for(int i=0;i<9;i++){
+//		vector<char> row(str[i].begin(),str[i].end());
+//		board.push_back(row);
+//	}
+//	bool result=sol.isValidSudoku(board);
+//	cout<<result;
+//	cin>>result;
+//	return 1;
+//
+//}
