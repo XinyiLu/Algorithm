@@ -94,4 +94,40 @@ public:
 		}
     }
 
+
+	vector<int> spiralOrder(vector<vector<int> > &matrix) {
+		    vector<int> list;
+        if(matrix.size()==0)
+            return list;
+		   for(int r=0;r<=matrix.size()/2;r++){
+			  int row=matrix.size(),col=matrix[0].size();
+			  if(r<=(row-1-r)){
+    			  for(int j=r;j<col-r;j++){
+    				  list.push_back(matrix[r][j]);
+    			  }
+			  }
+			  if(r<=(col-1-r)){
+    			  for(int i=r+1;i<row-r-1;i++){
+    			 		list.push_back(matrix[i][col-r-1]);
+    			  }
+			  }
+
+			  if((row-1-r)>r){
+				  for(int j=col-r-1;j>=r;j--){
+					list.push_back(matrix[row-1-r][j]);
+				  }
+			  }
+
+			  if(r<(col-r-1)&&(row-1-r)>r){
+				  for(int k=row-r-2;k>r;k--){
+					  list.push_back(matrix[k][r]);
+				  }
+			  }
+		   }
+
+        
+		   
+		   return list;
+    }
+    }
 };

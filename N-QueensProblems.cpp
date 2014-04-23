@@ -11,6 +11,13 @@ using namespace std;
 
 class Solution {
 public:
+
+	int totalNQueens(int n) {
+        vector<vector<int>> list=solveNQueensHelper(n,n-1);
+		return list.size();
+    }
+
+
     vector<vector<string> > solveNQueens(int n) {
 		vector<vector<int>> list=solveNQueensHelper(n,n-1);
 		vector<vector<string>> result;

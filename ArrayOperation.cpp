@@ -219,5 +219,33 @@ public:
 
 		return jumpHelper(A,result,smallest,level+1);
 	}
+
+	int maxSubArray(int A[], int n) {
+		if(n==0)
+			return 0;
+		int result=A[0];
+		int sum=A[0];
+		for(int i=1;i<n;i++){
+			if(A[i]>=0){
+				if(sum<0){
+					sum=A[i];
+				}else{
+					sum+=A[i];
+				}
+				
+			}else{
+				result=max(result,sum);
+				sum+=A[i];
+				if(sum<0){
+					sum=A[i];
+				}
+			}
+		}
+
+		return max(sum,result);
+    }
+
+
+
 };
 
