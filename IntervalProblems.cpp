@@ -7,6 +7,7 @@
 #include <vector>
 #include <set>
 #include <stack>
+#include <string.h>
 using namespace std;
 
 
@@ -79,5 +80,34 @@ public:
 		return result;
     }
 
+	int lengthOfLastWord(const char *s) {
+		const char *pch=s;
+		const char *begin=s,*end=begin;
+		while(*pch!=NULL&&*s!=NULL){
+			pch=strchr(s,' ');
+			if(pch==NULL){
+				break;
+			}
+			if(pch-s>0){
+				begin=s;
+				end=pch;
+			}
+			s=pch+1;
+			
+		}
+        if(*s==NULL){
+            return (end-begin);
+            
+        }
+		return strlen(s);
+    }
+
 
 };
+
+int main(){
+
+	Solution sol;
+	sol.lengthOfLastWord("a ");
+	return 1;
+}

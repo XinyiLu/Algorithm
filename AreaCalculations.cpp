@@ -129,5 +129,47 @@ public:
 		   
 		   return list;
     }
+    
+
+	vector<vector<int> > generateMatrix(int n) {
+		vector<int> unit(n,0);
+		vector<vector<int>> list(n,unit);
+		if(n==0)
+			return list;
+
+		int count=1;
+		for(int r=0;r<n/2;r++){
+			if(r<=n-1-r){
+				for(int i=r;i<n-r;i++){
+					list[r][i]=count++;
+				}
+
+				for(int j=r+1;j<n-1-r;j++){
+					list[j][n-1-r]=count++;
+				}
+			}
+
+			if(r<n-1-r){
+				for(int i=n-1-r;i>=r;i--){
+					list[n-1-r][i]=count++;
+				}
+
+				for(int j=n-r-2;j>r;j--){
+					list[j][r]=count++;
+				}
+			}
+		}
+
+		if(n%2==1){
+			list[n/2][n/2]=count++;	
+		}
+		return list;
+		
     }
+
 };
+
+
+
+
+

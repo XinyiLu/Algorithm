@@ -103,6 +103,20 @@ public:
 		return newHead->next;
     }
 
+	ListNode *rotateRight(ListNode *head, int k) {
+		   if(head==NULL)
+				return NULL;
+		   ListNode *newHead=new ListNode(0);
+		   newHead->next=head;
+		   ListNode *prevNode=newHead,*curNode=head;
+		   int count=1;
+		   while(curNode!=NULL){
+			curNode=curNode->next;
+			count++;
+		   }
+
+
+    }
 
 	ListNode *reverseKGroup(ListNode *head, int k) {
 		if(k==1||head==NULL||head->next==NULL){

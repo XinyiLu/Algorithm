@@ -162,6 +162,85 @@ public:
 		  return negative?(1.0/number):number;
     }
 
+
+	int uniquePaths(int m,int n) {
+		if(m<2||n<2){
+            return 1;
+        }
+		int path[m][n];
+		for(int i=0;i<m;i++){
+		    path[i][0]=1;
+		}
+		for(int j=1;j<n;j++){
+		    path[0][j]=1;
+		}
+		
+		for(int i=1;i<m;i++){
+		    for(int j=1;j<n;j++){
+		        path[i][j]=path[i-1][j]+path[i][j-1];  
+		    }
+		    
+		}
+		
+	    return path[m-1][n-1];	
+    }
+
+	int uniquePathsWithObstacles(vector<vector<int> > &obstacleGrid) {
+        if(obstacleGrid.size()==0)
+            return 1;
+        
+        int m=obstacleGrid.size(),n=obstacleGrid[0].size();
+        int path[m][n];
+        path[0][0]=obstacleGrid[0][0]==1?0:1;
+        for(int i=1;i<m;i++){
+            path[i][0]=obstacleGrid[i][0]==0?path[i-1][0]:0;
+        }
+        
+        for(int j=1;j<n;j++){
+            path[0][j]=obstacleGrid[0][j]==0?path[0][j-1]:0;
+        }
+        
+        for(int i=1;i<m;i++){
+            for(int j=1;j<n;j++){
+                path[i][j]=obstacleGrid[i][j]==0?(path[i-1][j]+path[i][j-1]):0;
+            }
+        }
+        
+        return path[m-1][n-1];
+    }
+
+
+	string getPermutation(int n, int k) {
+		vector<int> result;
+		vector<int> factor;
+		factor.push_back(0);
+		int f=1;
+		for(int i=1;i<n;i++){
+			f*=i;
+			factor.push_back(f);
+			result.push_back(i);
+		}
+		result.push_back(n);
+
+		int findex=n-1;
+		int index=0;
+		k--;
+		while(k>0){
+			int tempIndex=k/factor[findex];
+			k=k%factor[findex];
+			int tempValue=result[tempIndex+index];
+			result.erase(result.begin()+tempIndex+index);
+			result.insert(result.begin()+index,tempValue);
+			index++;
+			findex--;
+		}
+		string str="";
+		for(int i=0;i<result.size();i++){
+			str+=to_string((long long)result[i]);
+		}
+		return str;
+    }
+
 };
 
 
