@@ -271,5 +271,37 @@ public:
 
 		return result;
     }
+
+
+	string addBinary(string a, string b) {
+        int advance=0;
+		int i=a.length()-1,j=b.length()-1;
+		string str="";
+		for(;i>=0&&j>=0;i--,j--){
+			int sum=a[i]-'0'+b[j]-'0'+advance;
+			advance=sum/2;
+			str=to_string((long long)sum%2)+str;
+		}
+		
+		if(i>=0||j>=0){
+			string c=(i<0)?b.substr(0,j+1):a.substr(0,i+1);
+			for(int k=c.length()-1;k>=0;k--){
+				int sum=c[k]-'0'+advance;
+				str=to_string((long long)sum%2)+str;
+				advance=sum/2;
+			}
+		}
+
+		if(advance>0){
+			str=to_string((long long)advance)+str;
+		}
+
+		return str;
+    }
 };
 
+int main(){
+	Solution sol;
+	sol.addBinary("11","1");
+	
+}

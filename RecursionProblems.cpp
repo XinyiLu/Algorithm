@@ -241,6 +241,38 @@ public:
 		return str;
     }
 
+
+	int minPathSum(vector<vector<int> > &grid) {
+		if(grid.size()==0)
+			return 0;
+		int row=grid.size(),col=grid[0].size();
+		int **a=(int **)malloc(sizeof(int *)*row);
+		for(int i=0;i<row;i++){
+			*a=(int *)malloc(sizeof(int)*col);
+		}
+
+		a[0][0]=grid[0][0];
+		for(int i=1;i<row;i++){
+			a[i][0]=a[i-1][0]+grid[i][0];
+		}
+
+		for(int j=1;j<col;j++){
+			a[0][j]=a[0][j-1]+grid[0][j];
+		}
+
+		for(int i=1;i<row;i++){
+			for(int j=1;j<col;j++){
+				a[i][j]=min(a[i-1][j],a[i][j-1])+grid[i][j];
+			}
+		}
+		int result=a[row-1][col-1];
+		for(int i=0;i<row;i++){
+			free(*a);
+		}
+		free(a);
+		return result;
+    }
+
 };
 
 

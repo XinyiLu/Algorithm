@@ -103,20 +103,39 @@ public:
 		return newHead->next;
     }
 
+
 	ListNode *rotateRight(ListNode *head, int k) {
 		   if(head==NULL)
 				return NULL;
 		   ListNode *newHead=new ListNode(0);
 		   newHead->next=head;
 		   ListNode *prevNode=newHead,*curNode=head;
-		   int count=1;
+		   int count=0;
 		   while(curNode!=NULL){
 			curNode=curNode->next;
 			count++;
 		   }
+		   k=k%count;
+		   if(k==0)
+			   return head;
 
+		   curNode=head;
+		   for(int i=1;i<k;i++){
+				curNode=curNode->next;
+		   }
 
+		   while(curNode->next!=NULL){
+				curNode=curNode->next;
+				prevNode=prevNode->next;
+		   }
+
+		   newHead->next=prevNode->next;
+		   prevNode->next=NULL;
+		   curNode->next=head;
+
+		   return newHead->next;
     }
+
 
 	ListNode *reverseKGroup(ListNode *head, int k) {
 		if(k==1||head==NULL||head->next==NULL){
@@ -150,5 +169,28 @@ public:
 
 		pprev->next=pcur;
 		return newHead->next;
+    }
+
+
+	ListNode *mergeTwoLists2(ListNode *l1, ListNode *l2) {
+        ListNode *head=new ListNode(0);
+		ListNode *curNode=head;
+		while(l1!=NULL&&l2!=NULL){
+			if(l1->val<l2->val){
+				curNode->next=l1;
+				l1=l1->next;
+			}else{
+				curNode->next=l2;
+				l2=l2->next;
+			}
+			curNode=curNode->next;
+		}
+
+		if(l1!=NULL){
+			curNode->next=l1;
+		}else if(l2!=NULL){
+			curNode->next=l2;
+		}
+		return head->next;
     }
 };

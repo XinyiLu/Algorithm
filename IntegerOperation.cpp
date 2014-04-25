@@ -8,6 +8,47 @@ using namespace std;
 
 class Solution {
 public:
+
+	 int sqrt(int x) {
+        return sqrtHelper(x,0,x/2+1);
+		
+    }
+    
+    int sqrtHelper(int x,long long start,long long end){
+        if(start==end){
+            if(x<start*start)
+                return start-1;
+            return start;
+        }
+        
+        long long mid=start+(end-start)/2;
+        if(mid*mid==x){
+            return mid;
+        }else if(mid*mid<x){
+            return sqrtHelper(x,mid+1,end);
+        }else{
+            if(start==mid)
+                return start-1;
+            return sqrtHelper(x,start,mid-1);
+        }
+        
+    }
+
+	vector<int> plusOne(vector<int> &digits) {
+		int advance=1;
+		vector<int> result;
+		for(int i=digits.size()-1;i>=0;i--){
+			int sum=digits[i]+advance;
+			advance=sum/10;
+			result.insert(result.begin(),sum%10);
+		}
+
+		if(advance>0){
+			result.insert(result.begin(),advance);
+		}
+		return result;
+    }
+
     int divide(int dividend, int divisor) {
 		long long ldividend=dividend,ldivisor=divisor;
 	    bool negative=(dividend>0&&divisor<0)||(dividend<0&&divisor>0)?true:false;

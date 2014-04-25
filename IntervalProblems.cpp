@@ -105,9 +105,3 @@ public:
 
 };
 
-int main(){
-
-	Solution sol;
-	sol.lengthOfLastWord("a ");
-	return 1;
-}
