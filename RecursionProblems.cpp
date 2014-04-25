@@ -273,6 +273,28 @@ public:
 		return result;
     }
 
+	int minDistance(string word1, string word2) {
+        int row=word1.length(),col=word2.length();
+        
+        int mat[row+1][col+1];
+        mat[0][0]=0;
+        for(int i=1;i<row+1;i++){
+            mat[i][0]=mat[i-1][0]+1;
+        }
+        for(int j=1;j<col+1;j++){
+            mat[0][j]=mat[0][j-1]+1;
+        }
+        
+        for(int i=1;i<row+1;i++){
+            for(int j=1;j<col+1;j++){
+                mat[i][j]=min(mat[i-1][j],mat[i][j-1])+1;
+                mat[i][j]=min(mat[i][j],(word1[i-1]==word2[j-1]?mat[i-1][j-1]:(mat[i-1][j-1]+1)));
+            }
+        }
+        
+        return mat[row][col];
+    }
+
 };
 
 

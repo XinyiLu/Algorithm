@@ -300,8 +300,4 @@ public:
     }
 };
 
-int main(){
-	Solution sol;
-	sol.addBinary("11","1");
-	
-}
+

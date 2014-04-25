@@ -246,14 +246,45 @@ public:
     }
 
 
-	int climbStairs(int n) {
-         int ways[n+1];
-        ways[0]=1;
-        ways[1]=1;
-        for(int i=2;i<=n;i++){
-            ways[i]=ways[i-1]+ways[i-2];
-        }
-        return ways[n];
+	//int climbStairs(int n) {
+ //        int ways[n+1];
+ //       ways[0]=1;
+ //       ways[1]=1;
+ //       for(int i=2;i<=n;i++){
+ //           ways[i]=ways[i-1]+ways[i-2];
+ //       }
+ //       return ways[n];
+ //   }
+
+	void sortColors(int A[], int n) {
+        int redIndex=-1,blueIndex=n;
+		int index=0;
+		while(index<blueIndex){
+			if(A[index]==0){
+				A[++redIndex]=0;
+				index++;
+			}else if(A[index]==2){
+				int temp=A[--blueIndex];
+				A[blueIndex]=2;
+				A[index]=temp;
+			}else{
+				index++;
+			}
+		}
+
+		
+		for(int i=redIndex+1;i<blueIndex;i++){
+			A[i]=1;
+		}
     }
 };
 
+int main(){
+	Solution sol;
+	int a[]={2,0};
+	sol.sortColors(a,2);
+	for(int i=0;i<2;i++){
+		cout<<a[i];
+	}
+	return 1;
+}
