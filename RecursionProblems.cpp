@@ -295,6 +295,86 @@ public:
         return mat[row][col];
     }
 
+	vector<vector<int> > combine(int n, int k) {
+		   vector<int> list;
+		   for(int i=1;i<=n;i++){
+			list.push_back(i);
+		   }
+		   vector<vector<int>> sets=combineHelper(list,k,0);
+		
+		   return sets;
+    }
+
+
+	vector<vector<int>> combineHelper(vector<int> list,int k,int index){
+		vector<vector<int>> result;
+		if(k==0){
+			vector<int> unit;
+			result.push_back(unit);
+			return result;
+		}
+
+		for(int i=index;i<=list.size()-k;i++){
+			vector<vector<int>> subset=combineHelper(list,k-1,i+1);
+			for(int j=0;j<subset.size();j++){
+				subset[j].insert(subset[j].begin(),list[i]);
+			}
+
+			result.insert(result.end(),subset.begin(),subset.end());
+		}
+		return result;
+	}
+	
+	vector<vector<int>> getCombinations(vector<int> list,int index){
+		vector<vector<int>> result;
+		if(index==list.size()){
+			vector<int> unit;
+			result.push_back(unit);
+			return result;
+		}
+
+		for(int i=index;i<list.size();i++){
+			vector<int> newList(list);
+			int temp=newList[index];
+			newList[index]=newList[i];
+			newList[i]=temp;
+			vector<vector<int>> subset=getCombinations(newList,i+1);
+			for(int j=0;j<subset.size();j++){
+				subset[j].insert(subset[j].begin(),newList[index]);
+			}
+			result.insert(result.end(),subset.begin(),subset.end());
+		}
+
+		return result;
+	}
+
+
+	vector<vector<int> > subsets(vector<int> &S) {
+        sort(S.begin(),S.end());
+		return subsetsHelper(S,0);
+    }
+
+	vector<vector<int>> subsetsHelper(vector<int> &S,int index){
+		vector<vector<int>> result;
+		if(index==S.size()){
+			vector<int> unit;
+			result.push_back(unit);
+			return result;
+		}
+
+		int i=index;
+		if(i>index&&S[i-1]==S[i])
+			continue;
+		vector<vector<int>> subset=subsetsHelper(S,i+1);
+		for(int j=0;j<subset.size();j++){
+			vector<int> newUnit(subset[j]);
+			newUnit.insert(newUnit.begin(),S[i]);
+			result.push_back(newUnit);
+		}
+		result.insert(result.end(),subset.begin(),subset.end());
+		
+		return result;
+	}
 };
 
 

@@ -277,14 +277,32 @@ public:
 			A[i]=1;
 		}
     }
+
+
+	int removeDuplicates2(int A[], int n) {
+        if(n<=2)
+			return n;
+
+		int value=A[0];
+		bool dup=false;
+		int index=1;
+		for(int i=1;i<n;i++){
+			if(A[i]==value){
+				if(!dup){
+					dup=true;
+					A[index++]=A[i];
+				}
+			}else{
+				A[index++]=A[i];
+				dup=false;
+				value=A[i];
+			}
+		}
+
+		return index;
+    }
+
+
 };
 
-int main(){
-	Solution sol;
-	int a[]={2,0};
-	sol.sortColors(a,2);
-	for(int i=0;i<2;i++){
-		cout<<a[i];
-	}
-	return 1;
-}
+      
