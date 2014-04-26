@@ -193,4 +193,45 @@ public:
 		}
 		return head->next;
     }
+
+	ListNode *deleteDuplicates(ListNode *head) {
+		if(head==NULL||head->next==NULL)
+			return head;
+
+		int value=head->val;
+		ListNode *prevNode=head,*curNode=head->next;
+		while(curNode!=NULL){
+			if(curNode->val!=value){
+				value=curNode->val;
+				prevNode->next=curNode;
+				prevNode=prevNode->next;
+			}
+			curNode=curNode->next;
+		}
+
+		prevNode->next=curNode;
+		return head;
+    }
+
+	ListNode *deleteDuplicates1(ListNode *head) {
+		if(head==NULL||head->next==NULL)
+			return head;
+        ListNode *newHead=new ListNode(0);
+		newHead->next=head;
+		ListNode *prevNode=newHead,*curNode=head;
+		int value=head->val;
+
+		while(curNode!=NULL&&curNode->next!=NULL){
+			if(curNode->next->val!=value){
+				value=curNode->next->val;
+				prevNode->next=curNode;
+				prevNode=prevNode->next;
+			}
+			
+			curNode=curNode->next;
+		}
+		
+		prevNode->next=curNode;
+		return newHead->next;
+    }
 };
