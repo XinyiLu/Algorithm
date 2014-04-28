@@ -219,19 +219,43 @@ public:
         ListNode *newHead=new ListNode(0);
 		newHead->next=head;
 		ListNode *prevNode=newHead,*curNode=head;
-		int value=head->val;
 
-		while(curNode!=NULL&&curNode->next!=NULL){
-			if(curNode->next->val!=value){
-				value=curNode->next->val;
+		while(curNode!=NULL){
+			bool repeated=false;
+			while(curNode->next!=NULL&&curNode->val==curNode->next->val){
+				curNode=curNode->next;
+				repeated=true;
+			}
+			if(!repeated){
 				prevNode->next=curNode;
 				prevNode=prevNode->next;
 			}
-			
 			curNode=curNode->next;
 		}
 		
 		prevNode->next=curNode;
 		return newHead->next;
+    }
+
+	ListNode *partition(ListNode *head, int x) {
+		if(head==NULL||head->next==NULL)
+			return head;
+		ListNode *smallList=new ListNode(0);
+		ListNode *largeList=new ListNode(0);
+		ListNode *smallp=smallList,*largep=largeList;
+		while(head!=NULL){
+			if(head->val<x){
+				smallp->next=head;
+				smallp=smallp->next;
+			}else{
+				largep->next=head;
+				largep=largep->next;
+			}
+			head=head->next;
+		}
+
+		smallp->next=largeList->next;
+		largep->next=NULL;
+		return smallList->next;
     }
 };

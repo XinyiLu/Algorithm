@@ -6,6 +6,7 @@
 #include <sstream>
 #include <vector>
 #include <set>
+#include <stack>
 using namespace std;
 
 class Solution {
@@ -93,4 +94,63 @@ public:
 			return searchMatrixHelper(matrix,target,start,mid-1);
 	}
 
+
+	int maximalRectangle(vector<vector<char> > &matrix) {
+		 if(matrix.size()==0)
+			 return 0;
+		 int area=0;
+		 vector<int> prevList(matrix[0].size(),0);
+		 for(int i=0;i<matrix.size();i++){
+			vector<int> list;
+			for(int j=0;j<matrix[i].size();j++){
+				list.push_back(matrix[i][j]=='0'?0:1+prevList[j]);
+			}
+			area=max(area,matrixRectangleHelper(list));
+			prevList=list;
+		 }
+		 return area;
+    }
+
+	class Node{
+	public:
+		int width;
+		int height;
+	public:
+		Node(int h){
+			width=1;
+			height=h;
+		}
+		Node(int w,int h){
+			width=w;
+			height=h;
+		}
+	};
+
+	int matrixRectangleHelper(vector<int> &list){
+		stack<Node> s;
+		if(list.size()==1){
+			return list[0];
+		}
+		int area=0;
+		s.push(Node(list[0]));
+		for(int i=1;i<=list.size();i++){
+			int curHeight=(i==list.size())?(-1):list[i];
+			if(curHeight>=s.top().height){
+				s.push(Node(curHeight));
+			}else{
+				int w=0;
+				while(!s.empty()&&s.top().height>=curHeight){
+					Node node=s.top();
+					s.pop();
+					w+=node.width;
+					int temp=w*node.height;
+					if(temp>area)
+						area=temp;
+				}
+				s.push(Node(w+1,curHeight));
+			}
+		}
+
+		return area;
+	}
 };
