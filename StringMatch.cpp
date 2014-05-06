@@ -59,10 +59,3 @@ public:
 };	
 
 
-int main(){
-	Solution sol;
-	cout<<sol.minWindow("ADOBECODEBANC","ABC");
-	int value;
-	cin>>value;
-
-}

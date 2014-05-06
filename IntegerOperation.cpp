@@ -103,5 +103,44 @@ public:
 		}
     }
 
+	vector<int> grayCode(int n) {
+		vector<int> result;
+       if(n==0){
+        result.push_back(0);
+        return result;
+       }
+		
+
+		vector<int> subresult=grayCode(n-1);
+		//result.insert(result.begin(),subresult.begin(),subresult.end());
+		int tempZero=0,tempOne=1<<(n-1);
+		for(int i=subresult.size()-1;i>=0;i--){
+			result.insert(result.begin(),tempZero+subresult[i]);
+			result.push_back(tempOne+subresult[i]);
+		}
+		
+		return result;
+    }
+
+
+	int numDecodings(string s) {
+		if(s.length()==0)
+            return 0;
+		int len=s.length();
+		int array[2]={(s[len-1]=='0'?0:1),1};
+
+		for(int i=len-2;i>=0;i--){
+			int ways=array[0];
+			if(s[i]=='0'){
+				ways=0;
+			}else if(s[i]=='1'||(s[i]=='2'&&s[i+1]<'7')){
+				ways=array[0]+array[1];
+			}
+
+			array[1]=array[0];
+			array[0]=ways;
+		}
+		return array[0];
+    }
 
 };

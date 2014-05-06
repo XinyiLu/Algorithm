@@ -302,6 +302,29 @@ public:
 		return index;
     }
 
+	void merge(int A[], int m, int B[], int n) {
+		int index=m+n-1,i=m-1,j=n-1;
+		while(i>=0&&j>=0){
+			if(A[i]<B[j]){
+				A[index]=B[j];
+				j--;
+			}else{
+				A[index]=A[i];
+				i--;
+			}
+			index--;
+		}
+
+		if(i>=0||j>=0){
+			int k=i>=0?i:j;
+			int *C=(i>=0)?A:B;
+			for(;k>=0;k--){
+				A[index--]=C[k];
+			}
+		}
+
+		
+    }
 
 };
 
