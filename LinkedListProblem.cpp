@@ -258,4 +258,52 @@ public:
 		largep->next=NULL;
 		return smallList->next;
     }
+
+
+	ListNode *reverseBetween(ListNode *head, int m, int n) {
+		if(m==n)
+			return head;
+
+		ListNode *newHead=new ListNode(0);
+		newHead->next=head;
+
+		ListNode *pprev=newHead,*curNode=head;
+		int index=1;
+		while(index<m){
+			index++;
+			curNode=curNode->next;
+			pprev=pprev->next;
+		}
+		ListNode *prevNode=curNode;
+		curNode=curNode->next;
+
+		while(index<n){
+			index++;
+			ListNode *nextNode=curNode->next;
+			curNode->next=prevNode;
+			prevNode=curNode;
+			curNode=nextNode;
+		}
+
+		pprev->next->next=curNode;
+		pprev->next=prevNode;
+		return newHead->next;
+    }
+
+	int numTrees(int n) {
+        vector<int> num;
+		num.push_back(1);
+		num.push_back(1);
+		for(int i=2;i<=n;i++){
+			int sum=0;
+			for(int j=0;j<i;j++){
+				sum+=num[j]*num[i-j-1];
+			}
+			num.push_back(sum);
+		}
+
+		return num[n];
+    }
+
+
 };

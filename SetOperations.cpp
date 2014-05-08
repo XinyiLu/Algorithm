@@ -50,13 +50,3 @@ public:
 	}
 };
 
-int main(){
-
-	Solution oper;
-	int array[]={1,4,3,5,4,4,7,7,8,0};
-	vector<int> S(array,array+sizeof(array)/sizeof(int));
-	oper.subsetsWithDup(S);
-	cout<<"finished";
-	int value;
-	cin>>value;
-}
